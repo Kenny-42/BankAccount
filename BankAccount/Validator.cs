@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BankAccount;
-internal class Validator
+public class Validator
 {
     /// <summary>
     /// Checks to ensure a value is between inclusive boundaries
