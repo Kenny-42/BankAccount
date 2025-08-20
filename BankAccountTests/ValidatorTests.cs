@@ -6,15 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankAccount.Tests
+namespace BankAccount.Tests;
+[TestClass()]
+public class ValidatorTests
 {
-    [TestClass()]
-    public class ValidatorTests
+    [TestMethod()]
+    public void IsWithinRangeTest()
     {
-        [TestMethod()]
-        public void IsWithinRangeTest()
-        {
-            Assert.Fail();
-        }
+        Assert.Fail();
     }
 }
