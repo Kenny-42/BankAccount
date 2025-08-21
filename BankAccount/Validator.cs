@@ -14,13 +14,14 @@ public class Validator
     /// <param name="min">Minimum inclusive boundary</param>
     /// <param name="max">Maximum inclusive boundary</param>
     /// <returns></returns>
+    /// <exception cref="ArgumentException">Thrown if min boundary is greater than max boundary</exception>
     public bool IsWithinRange(double value, double min, double max)
     {
-        if (value < min)
+        if (min > max)
         {
-            return true;
+            throw new ArgumentException("Min cannot be greater than the max.");
         }
-        if (value > max)
+        if (value >= min && value <= max)
         {
             return true;
         }

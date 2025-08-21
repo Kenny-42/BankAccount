@@ -11,8 +11,85 @@ namespace BankAccount.Tests;
 public class ValidatorTests
 {
     [TestMethod()]
-    public void IsWithinRangeTest()
+    public void IsWithinRange_MinInclusiveBound_ReturnsTrue()
     {
-        Assert.Fail();
+        // Arrange - arranging all the data we need for the test
+        Validator validator = new();
+        double minBoundary = 10;
+        double maxBoundary = 100;
+        double valueToCheck = 10;
+
+        // Act
+        bool result = validator.IsWithinRange(valueToCheck, minBoundary, maxBoundary);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+    
+    [TestMethod()]
+    public void IsWithinRange_MaxInclusiveBound_ReturnsTrue()
+    {
+        // Arrange
+        Validator validator = new();
+        double minBoundary = 1;
+        double maxBoundary = 10;
+        double valueToCheck = 10;
+        // Act
+        bool result = validator.IsWithinRange(valueToCheck, minBoundary, maxBoundary);
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod()]
+    public void IsWithinRange_ValueWithinRange_ReturnsTrue()
+    {
+        // Arrange
+        Validator validator = new();
+        double minBoundary = 1;
+        double maxBoundary = 100;
+        double valueToCheck = 10;
+
+        // Act
+        bool result = validator.IsWithinRange(valueToCheck, minBoundary, maxBoundary);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod()]
+    public void IsWithinRange_ValueLessThanMinBoundary_ReturnFalse()
+    {
+        Validator validator = new();
+        double minBoundary = 6;
+        double maxBoundary = 100;
+        double valueToCheck = 5;
+
+        bool result = new Validator().IsWithinRange(valueToCheck, minBoundary, maxBoundary);
+
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod()]
+    public void IsWithinRange_ValueGreaterThanMaxBoundary_ReturnFalse()
+    {
+        Validator validator = new();
+        double minBoundary = 0;
+        double maxBoundary = 1000;
+        double valueToCheck = 1000.01;
+
+        bool result = new Validator().IsWithinRange(valueToCheck, minBoundary, maxBoundary);
+        
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod()]
+    public void IsWithinRange_MinGreaterThanMax_ThrowsArgumentException()
+    {
+        Validator validator = new();
+        double minBoundary = 100;
+        double maxBoundary = 0;
+        double valueToCheck = 50;
+
+        Assert.ThrowsException<ArgumentException>(() => validator.IsWithinRange(valueToCheck, minBoundary, maxBoundary));
     }
 }
