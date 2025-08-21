@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BankAccount;
-public class Account
+public partial class Account
 {
     private string _accountNumber = string.Empty;
 
@@ -28,7 +28,7 @@ public class Account
     {
         if (string.IsNullOrWhiteSpace(accountNumber)) return false;
         // Format: 4 digits, 5 letters (A-Z, case insensitive)
-        return System.Text.RegularExpressions.Regex.IsMatch(accountNumber, @"^\d{4}-[A-Za-z]{5}$");
+        return AccountNumberRegex().IsMatch(accountNumber);
     }
 
     /// <summary>
@@ -64,4 +64,7 @@ public class Account
         Balance -= amount;
         return Balance;
     }
+
+    [System.Text.RegularExpressions.GeneratedRegex(@"^\d{4}-[A-Za-z]{5}$")]
+    private static partial System.Text.RegularExpressions.Regex AccountNumberRegex();
 }
