@@ -7,11 +7,29 @@ using System.Threading.Tasks;
 namespace BankAccount;
 public class Account
 {
+    private string _accountNumber = string.Empty;
+
     /// <summary>
     /// AccountNumbers must start with 4 digits followed by
     /// a dash and then 5 characters (A-Z) not case sensitive
     /// </summary>
-    public string AccountNumber { get; set; }
+    public required string AccountNumber
+    {
+        get => _accountNumber;
+        init
+        {
+            if (!IsValidAccountNumber(value))
+                throw new ArgumentException("Invalid AccountNumber format.", nameof(AccountNumber));
+            _accountNumber = value;
+        }
+    }
+
+    private static bool IsValidAccountNumber(string accountNumber)
+    {
+        if (string.IsNullOrWhiteSpace(accountNumber)) return false;
+        // Format: 4 digits, 5 letters (A-Z, case insensitive)
+        return System.Text.RegularExpressions.Regex.IsMatch(accountNumber, @"^\d{4}-[A-Za-z]{5}$");
+    }
 
     /// <summary>
     /// The current balance of the account
@@ -40,7 +58,7 @@ public class Account
     {
         if (amount <= 0 || amount > Balance)
         {
-            throw new ArgumentOutOfRangeException(nameof(amount), "Cannot withdraw negative or more than current balance.")
+            throw new ArgumentOutOfRangeException(nameof(amount), "Cannot withdraw negative or more than current balance.");
         }
 
         Balance -= amount;
