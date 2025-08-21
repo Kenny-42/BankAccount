@@ -11,15 +11,17 @@ namespace BankAccount.Tests;
 public class ValidatorTests
 {
     [TestMethod()]
-    public void IsWithinRange_MinInclusiveBound_ReturnsTrue()
+    [DataRow(10, 10)]
+    [DataRow(5.001, 5.001)]
+    [DataRow(1.000005, 1.000005)]
+    [DataRow(-50.01, -50.01)]
+    public void IsWithinRange_MinInclusiveBound_ReturnsTrue(double minBoundary, double valueToCheck)
     {
         // Arrange - arranging all the data we need for the test
         Validator validator = new();
-        double minBoundary = 10;
         double maxBoundary = 100;
-        double valueToCheck = 10;
 
-        // Act
+        // Act - call method we are testing
         bool result = validator.IsWithinRange(valueToCheck, minBoundary, maxBoundary);
 
         // Assert
@@ -41,13 +43,14 @@ public class ValidatorTests
     }
 
     [TestMethod()]
-    public void IsWithinRange_ValueWithinRange_ReturnsTrue()
+    [DataRow(1, 100, 50)]
+    [DataRow(1, 100, 1.000001)]
+    [DataRow(1, 100, 99.9999999)]
+    [DataRow(-100, 10, -40)]
+    public void IsWithinRange_ValueWithinRange_ReturnsTrue(double minBoundary, double maxBoundary, double valueToCheck)
     {
         // Arrange
         Validator validator = new();
-        double minBoundary = 1;
-        double maxBoundary = 100;
-        double valueToCheck = 10;
 
         // Act
         bool result = validator.IsWithinRange(valueToCheck, minBoundary, maxBoundary);
